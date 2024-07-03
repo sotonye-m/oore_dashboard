@@ -149,10 +149,10 @@ const Signup = () => {
 
         try {
             const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/register`, userData);
-            if (response.status === 200) {
+            if (response.status === 200 || response.status === 201) {
                 toast.success('Account created successfully!');
-                const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/otp`, { email: email });
-                if (response.status === 200) {
+                const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/otp/email`, { email: email });
+                if (response.status === 200 || response.status === 201) {
                     toast.success('An OTP has been sent to your email address. Please check your inbox.');
                     navigate('/otp', { state: { email: email } });
                 } else {
