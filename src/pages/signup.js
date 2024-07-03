@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import PrimaryButton from '../components/PrimaryButton';
 import Loader from '../components/loader';
 import { useNavigate } from 'react-router-dom';
+import SignUpImage from '../assets/images/image.svg';
 
 const LoginContainer = styled.div`
     background-color: #fff;
@@ -19,6 +20,9 @@ const LoginContainer = styled.div`
 
 const MainDiv = styled.div`
     width: 50%;
+    height: 100vh;
+    align-items: center;
+    display: flex;
     @media (max-width: 768px) {
         display: none;
     }
@@ -202,7 +206,9 @@ const Signup = () => {
                 )}
             </Main>
             <MainDiv>
-                Know someone who is ready to make Africa a better place?
+                <div>
+                    <img src={SignUpImage} alt="signup cover" />
+                </div>
             </MainDiv>
         </LoginContainer>
     );
