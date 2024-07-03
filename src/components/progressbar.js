@@ -6,6 +6,12 @@ const ProgressBarWrapper = styled.div`
   height: 12px;
   background: #E6E6E6;
   border-radius: 100px;
+  @media (max-width: 768px) {
+    max-width: 100vw;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 320px;
+  }
 `;
 
 const ProgressBarFill = styled.div`
@@ -19,11 +25,11 @@ const ProgressBar = ({ percentage }) => {
   let barColor = '#1FE89B';
 
   if (percentage <= 20) {
-    barColor = 'red';
+    barColor = '#FF000F';
   } else if (percentage <= 49) {
-    barColor = '#FFA450';
+    barColor = '#E8B500';
   } else if (percentage >= 100) {
-    barColor = '#1FE89B';
+    barColor = '#00D986';
   } else {
     console.error('Invalid percentage');
   }

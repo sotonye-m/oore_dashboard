@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FaCog } from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
 import { BiSolidDashboard } from 'react-icons/bi';
-import { IoChatboxEllipsesOutline, IoPersonSharp } from 'react-icons/io5';
+import { IoPersonSharp } from 'react-icons/io5';
+import { MdHistory } from "react-icons/md";
+import { BiDonateHeart } from "react-icons/bi";
+import { LuLogOut } from "react-icons/lu";
 
 const SidebarStyle = styled.aside`
   background: #F6FFFC;
@@ -13,6 +15,9 @@ const SidebarStyle = styled.aside`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const SidebarContent = styled.div`
@@ -62,6 +67,11 @@ const CenteredText = styled.div`
 
 const Sidebar = () => {
   const location = useLocation();
+ 
+  const Logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  }
 
   return (
     <SidebarStyle>
@@ -75,22 +85,28 @@ const Sidebar = () => {
               </CenteredText>
             </Link>
           </li>
-          <li isActive={location.pathname === '/contact'}>
-            <Link to="/contact">
-              <span className="icon"><IoChatboxEllipsesOutline /></span>
-              Contact
+          <li isActive={location.pathname === '/projects'}>
+            <Link to="/projects">
+              <span className="icon"><BiDonateHeart /></span>
+              Projects
             </Link>
           </li>
           <li isActive={location.pathname === '/setting'}>
             <Link to="/setting">
-              <span className="icon"><FaCog /></span>
-              Setting
+              <span className="icon"><MdHistory /></span>
+              History
             </Link>
           </li>
           <li isActive={location.pathname === '/account'}>
             <Link to="/account">
               <span className="icon"><IoPersonSharp /></span>
               Account
+            </Link>
+          </li>
+          <li>
+            <Link to="/login" onClick={Logout}>
+              <span className="icon"><LuLogOut /></span>
+              Logout
             </Link>
           </li>
         </ul>
