@@ -148,7 +148,7 @@ const Signup = () => {
         };
 
         try {
-            const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/signin`, userData);
+            const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/register`, userData);
             if (response.status === 200) {
                 toast.success('Account created successfully!');
                 const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/otp`, { email: email });
