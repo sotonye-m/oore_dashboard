@@ -5,6 +5,7 @@ import { BiSolidDashboard } from 'react-icons/bi';
 import { BsPerson } from "react-icons/bs";
 import { MdHistory } from "react-icons/md";
 import { BiDonateHeart } from "react-icons/bi";
+import { Link, useLocation } from 'react-router-dom';
 
 const Container = styled.div`
   position: sticky;
@@ -32,6 +33,22 @@ const IconContainer = styled.div`
   margin: 20px;
   color: #BDBDBD;
 
+
+      ${'' /* display: flex;
+      align-items: center;
+      font-weight: 600;
+      font-size: 20px;
+      margin: 40px;
+      line-height: 30px; */}
+      a {
+        text-decoration: none;
+        color: ${(props) => (props.isActive ? '#00D986' : '#6F6F6F')};
+        ${'' /* display: flex;
+        align-items: center;
+        padding: 10px; */}
+      }
+    
+
   &:hover{
     color: #00A667;
     cursor: pointer;
@@ -56,23 +73,33 @@ const Text = styled.span`
 `;
 
 const Footer = () => {
+  const location = useLocation();
+
   return (
     <Container>
-      <IconContainer>
-        <Icon><BiSolidDashboard /></Icon>
-        <Text>Home</Text>
+      <IconContainer isActive={location.pathname === '/dashboard'}>
+          <Link to="/dashboard">
+            <Icon><BiSolidDashboard /></Icon>
+            <Text>Home</Text>
+          </Link>
       </IconContainer>
-      <IconContainer>
-        <Icon><BiDonateHeart /></Icon>
-        <Text>Donations</Text>
+      <IconContainer isActive={location.pathname === '/projects'}>
+          <Link to="/projects">
+            <Icon><BiDonateHeart /></Icon>
+            <Text>Projects</Text>
+        </Link>
       </IconContainer>
-      <IconContainer>
-        <Icon><MdHistory /></Icon>
-        <Text>History</Text>
+      <IconContainer isActive={location.pathname === '/history'}>
+        <Link to="/history">
+          <Icon><MdHistory /></Icon>
+          <Text>History</Text>
+        </Link>
       </IconContainer>
-      <IconContainer>
-        <Icon><BsPerson /></Icon>
-        <Text>You</Text>
+      <IconContainer isActive={location.pathname === '/account'}>
+        <Link to="/account">
+          <Icon><BsPerson /></Icon>
+          <Text>You</Text>
+        </Link>
       </IconContainer>
     </Container>
   );

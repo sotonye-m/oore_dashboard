@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import Loader from '../components/loader'; // Import the Loader component
+import Footer from '../components/footer';
 
 const Container = styled.div`
   @media (max-width: 768px) {
@@ -115,6 +116,7 @@ const ProjectsPage = () => {
           )}
         </Sec>
       </main>
+      <Footer />
     </Container>
   );
 };

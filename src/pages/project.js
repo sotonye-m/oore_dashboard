@@ -10,6 +10,7 @@ import axios from 'axios';
 import { useLocation, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Loader from '../components/loader'; // Import the Loader component
+import Footer from '../components/footer';
 
 const Container = styled.div`
   @media (max-width: 768px) {
@@ -216,6 +217,7 @@ const Project = () => {
           )}
         </Sec>
       </main>
+      <Footer />
     </Container>
   );
 };

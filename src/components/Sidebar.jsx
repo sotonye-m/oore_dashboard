@@ -91,8 +91,8 @@ const Sidebar = () => {
               Projects
             </Link>
           </li>
-          <li isActive={location.pathname === '/setting'}>
-            <Link to="/setting">
+          <li isActive={location.pathname === '/history'}>
+            <Link to="/history">
               <span className="icon"><MdHistory /></span>
               History
             </Link>
