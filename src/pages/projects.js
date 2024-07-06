@@ -4,7 +4,6 @@ import NavBar2 from '../components/navbar2';
 import Sidebar from '../components/Sidebar';
 import ButtonContainer from '../components/Categories';
 import Projects2 from '../components/projectsCard2';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import Loader from '../components/loader'; // Import the Loader component
@@ -19,6 +18,7 @@ const Container = styled.div`
 
 const Sec = styled.section`
   overflow: auto;
+  min-height: 80vh;
   @media (min-width: 768px) {
     padding-left: 300px;
     flex: 1;
@@ -43,7 +43,7 @@ const ProjectsPage = () => {
           },
         });
         console.log(response.data.data.data);
-        toast.success('Projects retrieved successfully');
+        console.log('Projects retrieved successfully');
         const projectsData = response.data.data.data.map((project) => ({
           id: project.id,
           image: project.cover_image,
@@ -57,7 +57,7 @@ const ProjectsPage = () => {
 
         setProjects(projectsData);
       } catch (error) {
-        toast.error('Failed to retrieve projects');
+        console.log('Failed to retrieve projects');
       } finally {
         setLoading(false); // Stop loading
       }
@@ -67,9 +67,9 @@ const ProjectsPage = () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/categories`);
         setCategories(response.data.data);
-        toast.success('Categories retrieved successfully');
+        console.log('Categories retrieved successfully');
       } catch (error) {
-        toast.error('Failed to retrieve categories');
+        console.log('Failed to retrieve categories');
       }
     };
 

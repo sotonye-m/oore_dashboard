@@ -8,6 +8,8 @@ import Signup from './pages/signup';
 import { ToastContainer } from 'react-toastify';
 import RequireAuth from './context/RequireAuth';
 import Otp from './pages/otp';
+import DonateResult from './pages/donate';
+import AccountPage from './pages/account';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/projects' element={<ProjectsPage />} />
           <Route path='/project/:projectID' element={<Project />} />
+          <Route path='/donate' element={<DonateResult />} />
+          <Route path='/account' element={<AccountPage />} />
         </Route>
       </Routes>
     </div>

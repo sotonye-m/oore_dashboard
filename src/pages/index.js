@@ -6,17 +6,11 @@ import styled from 'styled-components';
 import VolunteerPic from '../assets/images/volunteer.png';
 import { IoIosArrowForward } from "react-icons/io";
 import ButtonContainer from '../components/Categories';
-import { FaHeartbeat } from "react-icons/fa";
-import { IoSchoolSharp } from "react-icons/io5";
-import { MdCloudySnowing } from "react-icons/md";
 import Projects from '../components/projectsCard';
-import ProjectPic from '../assets/images/project.png';
 import { useNavigate } from 'react-router-dom';
 import { MdAdd } from "react-icons/md";
 import axios from 'axios';
-import { toast } from 'react-toastify';
 import Loader from '../components/loader';
-import DonateModal from '../components/donateModal';
 
 const Container = styled.div`
   @media (max-width: 768px) {
@@ -27,6 +21,7 @@ const Container = styled.div`
 
 const Sec = styled.section`
   overflow: auto;
+  min-height: 80vh;
   @media (min-width: 768px) {
     padding-left: 300px;
     flex: 1;
@@ -148,7 +143,7 @@ const Dashboard = () => {
             'Content-Type': 'application/json',
           },
         });
-        toast.success('Projects retrieved successfully');
+        console.log('Projects retrieved successfully');
         const projectsData = response.data.data.data.map((project) => ({
           id: project.id,
           image: project.cover_image,
@@ -162,7 +157,7 @@ const Dashboard = () => {
 
         setProjects(projectsData);
       } catch (error) {
-        toast.error('Failed to retrieve projects');
+        console.log('Failed to retrieve projects');
       } finally {
         setLoading(false);
       }
@@ -172,9 +167,9 @@ const Dashboard = () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/categories`);
         setCategories(response.data.data);
-        toast.success('Categories retrieved successfully');
+        console.log('Categories retrieved successfully');
       } catch (error) {
-        toast.error('Failed to retrieve categories');
+        console.log('Failed to retrieve categories');
       }
     };
 
@@ -204,7 +199,7 @@ const Dashboard = () => {
             <BlueContainer>
               <ContentContainer>
                 <WriteUp>
-                  Join the volunteer group and become a partner in making a difference.
+                  Join the community and become a partner in making a difference.
                 </WriteUp>
                 <Button><MdAdd /> Join Now</Button>
               </ContentContainer>

@@ -113,6 +113,8 @@ const Div = styled.div`
 const Projects = ({ data }) => {
   const [showModal, setShowModal] = useState(false);
   const [donateProjectId, setDonateProjectId] = useState(null);
+  const [donateProjectImage, setDonateProjectImage] = useState(null);
+  const [donateProjectTitle, setDonateProjectTitle] = useState(null);
 
   const navigate = useNavigate();
 
@@ -120,8 +122,10 @@ const Projects = ({ data }) => {
     navigate(`/project/${projectId}`);
   };
 
-  const handleDonate = (projectId) => {
+  const handleDonate = (projectId, projectImage, projectHeader) => {
     setDonateProjectId(projectId);
+    setDonateProjectImage(projectImage);
+    setDonateProjectTitle(projectHeader);
     setShowModal(true);
   };
   return (
@@ -141,14 +145,14 @@ const Projects = ({ data }) => {
             <ProgressBar percentage={item.percentage}/>
             <ButtonsContainer>
                 <Button onClick={()=> handleViewMore(item.id)}>View More</Button>
-                <Button2 onClick={()=> handleDonate(item.id)}>Donate</Button2>
+                <Button2 onClick={()=> handleDonate(item.id, item.image, item.header)}>Donate</Button2>
             </ButtonsContainer>
           </Div>
           
         </Container>
       ))}
       {showModal && (
-        <DonateModal isPopOpen={showModal} projectID={donateProjectId} onClose={() => setShowModal(false)} />
+        <DonateModal isPopOpen={showModal} projectID={donateProjectId} projectImage={donateProjectImage} projectTitle={donateProjectTitle} onClose={() => setShowModal(false)} />
       )}
     </>
   );

@@ -24,31 +24,33 @@ const SidebarContent = styled.div`
   ul {
     list-style: none;
     padding: 0;
-    li {
-      display: flex;
-      align-items: center;
-      font-weight: 600;
-      font-size: 20px;
-      margin: 40px;
-      line-height: 30px;
-      a {
-        text-decoration: none;
-        color: ${(props) => (props.isActive ? '#00D986' : '#6F6F6F')};
-        display: flex;
-        align-items: center;
-        padding: 10px;
-      }
-      .icon {
-        margin-right: 15px;
-      }
-      border-left: ${(props) => (props.isActive ? '3px solid #00D986' : 'none')};
-      &:hover {
-        a {
-          color: #00D986;
-        }
-      }
-    }
   }
+`;
+
+const ListItem = styled.li`
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 20px;
+  margin: 40px;
+  line-height: 30px;
+  border-left: ${(props) => (props.isActive ? '3px solid #00D986' : 'none')};
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: ${(props) => (props.isActive ? '#00D986' : '#6F6F6F')};
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  
+  &:hover {
+    color: #00D986;
+  }
+`;
+
+const Icon = styled.span`
+  margin-right: 15px;
 `;
 
 const Footer = styled.div`
@@ -67,7 +69,7 @@ const CenteredText = styled.div`
 
 const Sidebar = () => {
   const location = useLocation();
- 
+
   const Logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -77,40 +79,40 @@ const Sidebar = () => {
     <SidebarStyle>
       <SidebarContent>
         <ul>
-          <li isActive={location.pathname === '/dashboard'}>
-            <Link to="/dashboard">
-              <span className="icon"><BiSolidDashboard /></span>
+          <ListItem isActive={location.pathname === '/dashboard'}>
+            <StyledLink to="/dashboard" isActive={location.pathname === '/dashboard'}>
+              <Icon><BiSolidDashboard /></Icon>
               <CenteredText>
                 Dashboard
               </CenteredText>
-            </Link>
-          </li>
-          <li isActive={location.pathname === '/projects'}>
-            <Link to="/projects">
-              <span className="icon"><BiDonateHeart /></span>
+            </StyledLink>
+          </ListItem>
+          <ListItem isActive={location.pathname === '/projects'}>
+            <StyledLink to="/projects" isActive={location.pathname === '/projects'}>
+              <Icon><BiDonateHeart /></Icon>
               Projects
-            </Link>
-          </li>
-          <li isActive={location.pathname === '/history'}>
-            <Link to="/history">
-              <span className="icon"><MdHistory /></span>
+            </StyledLink>
+          </ListItem>
+          <ListItem isActive={location.pathname === '/history'}>
+            <StyledLink to="/history" isActive={location.pathname === '/history'}>
+              <Icon><MdHistory /></Icon>
               History
-            </Link>
-          </li>
-          <li isActive={location.pathname === '/account'}>
-            <Link to="/account">
-              <span className="icon"><IoPersonSharp /></span>
+            </StyledLink>
+          </ListItem>
+          <ListItem isActive={location.pathname === '/account'}>
+            <StyledLink to="/account" isActive={location.pathname === '/account'}>
+              <Icon><IoPersonSharp /></Icon>
               Account
-            </Link>
-          </li>
-          <li>
-            <Link to="/login" onClick={Logout}>
-              <span className="icon"><LuLogOut /></span>
+            </StyledLink>
+          </ListItem>
+          <ListItem>
+            <StyledLink to="/login" onClick={Logout}>
+              <Icon><LuLogOut /></Icon>
               Logout
-            </Link>
-          </li>
+            </StyledLink>
+          </ListItem>
         </ul>
-       <Footer>Oore. {new Date().getFullYear()}</Footer>
+        <Footer>Oore. {new Date().getFullYear()}</Footer>
       </SidebarContent>
     </SidebarStyle>
   );

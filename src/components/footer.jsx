@@ -3,9 +3,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { BiSolidDashboard } from 'react-icons/bi';
 import { BsPerson } from "react-icons/bs";
+import { LuLogOut } from "react-icons/lu";
 import { MdHistory } from "react-icons/md";
 import { BiDonateHeart } from "react-icons/bi";
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   position: sticky;
@@ -30,7 +31,7 @@ const IconContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px;
+  margin: 10px;
   color: #BDBDBD;
 
 
@@ -74,6 +75,13 @@ const Text = styled.span`
 
 const Footer = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const Logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    navigate('/login');
+  }
 
   return (
     <Container>
@@ -99,6 +107,12 @@ const Footer = () => {
         <Link to="/account">
           <Icon><BsPerson /></Icon>
           <Text>You</Text>
+        </Link>
+      </IconContainer>
+      <IconContainer onClick={Logout}>
+        <Link to="/logout">
+          <Icon style={{color:'#FF2679'}}><LuLogOut /></Icon>
+          <Text style={{color:'#FF2679'}}>Logout</Text>
         </Link>
       </IconContainer>
     </Container>
