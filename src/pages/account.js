@@ -6,6 +6,7 @@ import PrimaryButton from '../components/PrimaryButton';
 import NavBar from '../components/navbar';
 import Sidebar from '../components/Sidebar';
 import { Sec } from './donate';
+import CountryDropdown from 'country-dropdown-with-flags-for-react';
 
 const SecondContainer = styled.div`
   display: flex;
@@ -48,18 +49,37 @@ const Input = styled.input`
   }
 `;
 
+const StyledCountryDropdownWrapper = styled.div`
+  .country-dropdown {
+    border: none;
+    border-bottom: 1px solid #8c8c8c;
+    padding: 16px 0;
+    font-family: Montserrat;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 14.63px;
+    text-align: left;
+    color: #404040;
+    width: 100%;
+    background: aliceblue;
+    &:focus {
+      outline: none; /* Remove the default blue outline */
+    }
+  }
+`;
+
 const LoginForm = styled.form`
-    justify-content: center;
-    align-items: center;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Header = styled.h1`
-    font-family: Montserrat;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 24.38px;
-    text-align: left;
-    color: #1E1E1E;
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24.38px;
+  text-align: left;
+  color: #1e1e1e;
 `;
 
 const AccountPage = () => {
@@ -86,27 +106,41 @@ const AccountPage = () => {
     });
   };
 
+  const handleCountryChange = (country) => {
+    setUserDataState({
+      ...userDataState,
+      country: country,
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`${process.env.REACT_APP_BASE_URL}/user`, {
-        first_name: userDataState.firstName,
-        last_name: userDataState.lastName,
-        country: userDataState.country,
-      }, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('bearerToken')}`,
-          'Content-Type': 'application/json',
+      await axios.put(
+        `${process.env.REACT_APP_BASE_URL}/user`,
+        {
+          first_name: userDataState.firstName,
+          last_name: userDataState.lastName,
+          country: userDataState.country,
         },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('bearerToken')}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
       // Update the local storage with new user data
-      localStorage.setItem('user', JSON.stringify({
-        ...user,
-        first_name: userDataState.firstName,
-        last_name: userDataState.lastName,
-        country: userDataState.country,
-      }));
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
+          ...user,
+          first_name: userDataState.firstName,
+          last_name: userDataState.lastName,
+          country: userDataState.country,
+        })
+      );
 
       toast.success('Profile updated successfully.');
     } catch (error) {
@@ -117,34 +151,60 @@ const AccountPage = () => {
 
   return (
     <Container>
-        <NavBar />
-        <main style={{ display: 'flex' }}>
-            <Sidebar />
-            <Sec>
-                <SecondContainer>
-                    <LoginForm onSubmit={handleSubmit}>
-                        <Header>Account Information</Header>
-                        <div style={{ display: 'grid', gap: '5px', marginBottom: '10px' }}>
-                            <Label htmlFor="firstName">First Name</Label>
-                            <Input type="text" placeholder="First name" value={userDataState.firstName} onChange={handleChange} />
-                        </div>
-                        <div style={{ display: 'grid', gap: '5px', marginBottom: '10px' }}>
-                            <Label htmlFor="lastName">Last Name</Label>
-                            <Input type="text" placeholder="Last name" value={userDataState.lastName} onChange={handleChange} />
-                        </div>
-                        <div style={{ display: 'grid', gap: '5px', marginBottom: '10px' }}>
-                            <Label htmlFor="email">Email</Label>
-                            <Input style={{background:'#ddd',cursor:'not-allowed'}} type="email" placeholder="Email address" value={userDataState.email} onChange={handleChange} disabled />
-                        </div>
-                        <div style={{ display: 'grid', gap: '5px', marginBottom: '10px' }}>
-                            <Label htmlFor="country">Country</Label>
-                            <Input type="text" placeholder="Country" value={userDataState.country} onChange={handleChange} />
-                        </div>
-                        <PrimaryButton type="submit">Save Changes</PrimaryButton>
-                    </LoginForm>
-                </SecondContainer>
-            </Sec>
-        </main>
+      <NavBar />
+      <main style={{ display: 'flex' }}>
+        <Sidebar />
+        <Sec>
+          <SecondContainer>
+            <LoginForm onSubmit={handleSubmit}>
+              <Header>Account Information</Header>
+              <div style={{ display: 'grid', gap: '5px', marginBottom: '10px' }}>
+                <Label htmlFor="firstName">First Name</Label>
+                <Input
+                  type="text"
+                  placeholder="First name"
+                  value={userDataState.firstName}
+                  onChange={handleChange}
+                  name="firstName"
+                />
+              </div>
+              <div style={{ display: 'grid', gap: '5px', marginBottom: '10px' }}>
+                <Label htmlFor="lastName">Last Name</Label>
+                <Input
+                  type="text"
+                  placeholder="Last name"
+                  value={userDataState.lastName}
+                  onChange={handleChange}
+                  name="lastName"
+                />
+              </div>
+              <div style={{ display: 'grid', gap: '5px', marginBottom: '10px' }}>
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  style={{ background: '#ddd', cursor: 'not-allowed' }}
+                  type="email"
+                  placeholder="Email address"
+                  value={userDataState.email}
+                  onChange={handleChange}
+                  disabled
+                  name="email"
+                />
+              </div>
+              <div style={{ display: 'grid', gap: '5px', marginBottom: '10px' }}>
+                <Label htmlFor="country">Country</Label>
+                <CountryDropdown
+                    value={userDataState.country}
+                    onChange={handleCountryChange}
+                    name="country"
+                    className="country-dropdown2"
+                    showDefaultOption={true}
+                />
+              </div>
+              <PrimaryButton type="submit">Save Changes</PrimaryButton>
+            </LoginForm>
+          </SecondContainer>
+        </Sec>
+      </main>
     </Container>
   );
 };

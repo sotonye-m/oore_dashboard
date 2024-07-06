@@ -8,6 +8,7 @@ import PrimaryButton from '../components/PrimaryButton';
 import Loader from '../components/loader';
 import { useNavigate } from 'react-router-dom';
 import SignUpImage from '../assets/images/image.svg';
+import CountryDropdown from 'country-dropdown-with-flags-for-react';
 
 const LoginContainer = styled.div`
     background-color: #fff;
@@ -196,7 +197,14 @@ const Signup = () => {
                             </ToggleIcon>
                         </InputContainer>
                         <div style={{ display: 'grid', gap: '5px', marginBottom: '10px' }}>
-                            <Input type="text" placeholder="Country" value={country} onChange={handleCountryChange} />
+                            <CountryDropdown
+                                value={country}
+                                onChange={handleCountryChange}
+                                preferredCountries={['ng','gb', 'us']}
+                                name="country"
+                                className="country-dropdown"
+                                showDefaultOption={true}
+                            />
                         </div>
                         <PrimaryButton type="submit">Create account</PrimaryButton>
                         <div style={{ margin: '10px' }}>
