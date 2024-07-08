@@ -187,6 +187,9 @@ const Dashboard = () => {
     ? projects.filter((project) => project.category_id === selectedCategory)
     : projects;
 
+    const joinCommunity = () => {
+      window.open("https://forms.gle/PXoSMHjAr23YkQax8", '_blank');
+    }
   return (
     <Container>
       <NavBar />
@@ -201,7 +204,7 @@ const Dashboard = () => {
                 <WriteUp>
                   Join the community and become a partner in making a difference.
                 </WriteUp>
-                <Button><MdAdd /> Join Now</Button>
+                <Button onClick={()=> joinCommunity()}><MdAdd /> Join Now</Button>
               </ContentContainer>
               <ImageContainer>
                 <Image src={VolunteerPic} alt="Volunteer" />
