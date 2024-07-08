@@ -89,7 +89,7 @@ const Signup = () => {
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [password, setPassword] = useState('');
-    const [country, setCountry] = useState('');
+    const [country, setCountry] = useState('Nigeria');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);

@@ -69,7 +69,7 @@ const NotificationIcon = styled.span`
 
 const NavBar = () => {
   const userData = localStorage.getItem('user');
-  console.log(userData);
+  //console.log(userData);
 
   // Parse user data JSON string to object
   const user = JSON.parse(userData);
