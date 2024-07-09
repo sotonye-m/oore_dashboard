@@ -9,7 +9,7 @@ import { BiDonateHeart } from "react-icons/bi";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
-  position: sticky;
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;

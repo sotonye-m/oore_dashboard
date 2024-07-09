@@ -21,7 +21,6 @@ const Container = styled.div`
 
 const Sec = styled.section`
   overflow: auto;
-  min-height: 80vh;
   @media (min-width: 768px) {
     padding-left: 300px;
     flex: 1;
