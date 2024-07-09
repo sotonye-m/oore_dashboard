@@ -8,20 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Loader from '../components/loader';
 
-const LoginContainer = styled.div`
-    background-color: #fff;
-    display: block;
-
-    @media (min-width: 768px) {
-        display: flex;
-    }
-`;
-const MainDiv = styled.div`
-    width: 50%;
-    @media (max-width: 768px) {
-        display: none;
-    }
-`;
 const Main = styled.div`
     text-align: center;
     display: flex;
@@ -45,6 +31,7 @@ const LoginForm = styled.form`
     justify-content: center;
     align-items: center;
     width: 500px;
+    padding: 20px;
 `;
 const InputContainer = styled.div`
     position: relative;
@@ -82,8 +69,8 @@ const Otp = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
-    //const email = location.state.email;
-    const [email, setEmail] = useState('sotonyemcleod@gmail.com');
+    const email = location.state.email;
+    //const [email, setEmail] = useState('sotonyemcleod@gmail.com');
     const [timeLeft, setTimeLeft] = useState(60);
     const [disabled, setDisabled] = useState(false);
     const [buttonText2, setButtonText2] = useState('Resend');

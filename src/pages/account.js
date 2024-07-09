@@ -49,25 +49,6 @@ const Input = styled.input`
   }
 `;
 
-const StyledCountryDropdownWrapper = styled.div`
-  .country-dropdown {
-    border: none;
-    border-bottom: 1px solid #8c8c8c;
-    padding: 16px 0;
-    font-family: Montserrat;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 14.63px;
-    text-align: left;
-    color: #404040;
-    width: 100%;
-    background: aliceblue;
-    &:focus {
-      outline: none; /* Remove the default blue outline */
-    }
-  }
-`;
-
 const LoginForm = styled.form`
   justify-content: center;
   align-items: center;
