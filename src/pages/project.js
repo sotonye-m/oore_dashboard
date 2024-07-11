@@ -268,7 +268,7 @@ const Project = () => {
                       </Flex>
                       <ButtonCon2>
                         <PrimaryButton  onClick={() => handleDonate(projectData.id, projectData.image, projectData.header)}>
-                          Give Donation
+                          Donate
                         </PrimaryButton>
                       </ButtonCon2>
                     </div>
@@ -277,7 +277,7 @@ const Project = () => {
               )}
               <ButtonCon>
                 <PrimaryButton onClick={() => handleDonate(projectData.id, projectData.image, projectData.header)}>
-                  Give Donation
+                  Donate
                 </PrimaryButton>
               </ButtonCon>
               <TextContainer2>
