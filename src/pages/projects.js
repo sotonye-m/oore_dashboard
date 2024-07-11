@@ -55,11 +55,11 @@ const ProjectsPage = () => {
           id: project.id,
           image: project.cover_image,
           header: project.name,
-          text: project.description,
+          text: project?.category?.name,
           button1: 'View More',
           button2: 'Donate',
           percentage: parseFloat(project.percent_complete.replace('%', '')),
-          category_id: project.category_id, // Add category ID to each project
+          category_id: project.category.id, // Add category ID to each project
         }));
 
         setProjects(projectsData);
@@ -90,7 +90,7 @@ const ProjectsPage = () => {
   };
 
   const filteredProjects = selectedCategory
-    ? projects.filter((project) => project.category_id === selectedCategory)
+    ? projects.filter((project) => Number(project.category_id) === selectedCategory)
     : projects;
 
   const data = [

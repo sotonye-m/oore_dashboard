@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import ProgressBar from './progressbar';
 import DonateModal from './donateModal';
@@ -21,7 +21,6 @@ const ImageContainer = styled.div`
   max-width: 300px;
   margin-bottom: 10px;
   margin-right: 20px;
-
 `;
 
 const Image = styled.img`
@@ -39,23 +38,28 @@ const ContentContainer = styled.div`
 `;
 
 const TextContainer = styled.div`
-    @media (min-width: 768px) {
+  @media (min-width: 768px) {
     padding-right: 10px;
   }
-`
-const Text = styled.p`
-  margin-bottom: 10px;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0em;
-    text-align: left;
-
 `;
+const Text = styled.span`
+  margin-bottom: 10px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #00A264;
+  background-color: #E8FFF6;
+  padding: 5px;
+  border-radius: 8px;
+  font-weight: 600;
+`;
+
 const Header = styled.p`
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0em;
-    text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0em;
+  text-align: left;
 `;
 
 const ButtonsContainer = styled.div`
@@ -96,19 +100,26 @@ const Button2 = styled.button`
   font-weight: 700;
   letter-spacing: 0em;
   border-radius: 32px;
-
- 
 `;
 
 const Div = styled.div`
- @media (min-width: 768px) {
+  @media (min-width: 768px) {
     align-items: center;
     display: grid;
     padding: 10px;
     margin-left: 5px;
     border-left: 1px #ddd solid;
   }
-`
+`;
+
+const NoDataContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  text-align: center;
+  color: #888;
+`;
 
 const Projects = ({ data }) => {
   const [showModal, setShowModal] = useState(false);
@@ -128,34 +139,46 @@ const Projects = ({ data }) => {
     setDonateProjectTitle(projectHeader);
     setShowModal(true);
   };
+
   return (
     <>
-      {data.slice(0, 3).map((item, index) => (
-        <Container key={index}>
-          <ContentContainer>
-          <ImageContainer>
-            <Image src={item.image} alt="Item Image" />
-          </ImageContainer>
-          <TextContainer>
-            <Header>{item.header}</Header>
-            <Text>{item.text}</Text>
-          </TextContainer>
-          </ContentContainer>
-          <Div>
-            <ProgressBar percentage={item.percentage}/>
-            <ButtonsContainer>
-                <Button onClick={()=> handleViewMore(item.id)}>View More</Button>
-                <Button2 onClick={()=> handleDonate(item.id, item.image, item.header)}>Donate</Button2>
-            </ButtonsContainer>
-          </Div>
-          
-        </Container>
-      ))}
+      {data.length > 0 ? (
+        data.slice(0, 3).map((item, index) => (
+          <Container key={index}>
+            <ContentContainer>
+              <ImageContainer>
+                <Image src={item.image} alt="Item Image" />
+              </ImageContainer>
+              <TextContainer>
+                <Header>{item.header}</Header>
+                <Text>{item.text}</Text>
+              </TextContainer>
+            </ContentContainer>
+            <Div>
+              <ProgressBar percentage={item.percentage} />
+              <ButtonsContainer>
+                <Button onClick={() => handleViewMore(item.id)}>View More</Button>
+                <Button2 onClick={() => handleDonate(item.id, item.image, item.header)}>Donate</Button2>
+              </ButtonsContainer>
+            </Div>
+          </Container>
+        ))
+      ) : (
+        <NoDataContainer>
+          <p>No ongoing projects available at the moment.</p>
+        </NoDataContainer>
+      )}
       {showModal && (
-        <DonateModal isPopOpen={showModal} projectID={donateProjectId} projectImage={donateProjectImage} projectTitle={donateProjectTitle} onClose={() => setShowModal(false)} />
+        <DonateModal
+          isPopOpen={showModal}
+          projectID={donateProjectId}
+          projectImage={donateProjectImage}
+          projectTitle={donateProjectTitle}
+          onClose={() => setShowModal(false)}
+        />
       )}
     </>
   );
 };
 
-export default Projects
+export default Projects;

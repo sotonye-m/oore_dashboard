@@ -39,12 +39,17 @@ const TextContainer = styled.div`
   }
 `;
 
-const Text = styled.p`
+const Text = styled.span`
   margin-bottom: 10px;
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 0em;
   text-align: left;
+  color: #00A264;
+  background-color: #E8FFF6;
+  padding: 5px;
+  border-radius: 8px;
+  font-weight: 600;
 `;
 
 const Header = styled.p`
@@ -134,6 +139,15 @@ const PaginationButton = styled.button`
   }
 `;
 
+const NoDataMessage = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 18px;
+  color: #666;
+`;
+
 const Projects2 = ({ data, currentPage, totalPages, onPageChange }) => {
   const navigate = useNavigate();
   const itemsPerPage = 3;
@@ -145,45 +159,51 @@ const Projects2 = ({ data, currentPage, totalPages, onPageChange }) => {
 
   return (
     <>
-      {currentPageData.map((item, index) => (
-        <Container key={index} onClick={() => navigate(`/project/${item.id}`)}>
-          <ContentContainer>
-            <ImageContainer>
-              <Image src={item.image} alt="Item Image" />
-            </ImageContainer>
-            <TextContainer>
-              <Header>{item.header}</Header>
-              <Text>{item.text}</Text>
-            </TextContainer>
-          </ContentContainer>
-          <Div>
-            <MdOutlineMoreHoriz />
-          </Div>
-        </Container>
-      ))}
-      <PaginationContainer>
-        <PaginationButton
-          onClick={() => onPageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </PaginationButton>
-        {[...Array(totalPages).keys()].map((page) => (
-          <PaginationButton
-            key={page + 1}
-            onClick={() => onPageChange(page + 1)}
-            disabled={currentPage === page + 1}
-          >
-            {page + 1}
-          </PaginationButton>
-        ))}
-        <PaginationButton
-          onClick={() => onPageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </PaginationButton>
-      </PaginationContainer>
+      {currentPageData.length > 0 ? (
+        <>
+          {currentPageData.map((item, index) => (
+            <Container key={index} onClick={() => navigate(`/project/${item.id}`)}>
+              <ContentContainer>
+                <ImageContainer>
+                  <Image src={item.image} alt="Item Image" />
+                </ImageContainer>
+                <TextContainer>
+                  <Header>{item.header}</Header>
+                  <Text>{item.text}</Text>
+                </TextContainer>
+              </ContentContainer>
+              <Div>
+                <MdOutlineMoreHoriz />
+              </Div>
+            </Container>
+          ))}
+          <PaginationContainer>
+            <PaginationButton
+              onClick={() => onPageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </PaginationButton>
+            {[...Array(totalPages).keys()].map((page) => (
+              <PaginationButton
+                key={page + 1}
+                onClick={() => onPageChange(page + 1)}
+                disabled={currentPage === page + 1}
+              >
+                {page + 1}
+              </PaginationButton>
+            ))}
+            <PaginationButton
+              onClick={() => onPageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </PaginationButton>
+          </PaginationContainer>
+        </>
+      ) : (
+        <NoDataMessage>No ongoing project</NoDataMessage>
+      )}
     </>
   );
 };
