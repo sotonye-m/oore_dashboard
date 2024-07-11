@@ -26,7 +26,8 @@ const Sec = styled.section`
     flex: 1;
   }
   @media (max-width: 768px) {
-    margin-bottom: 70px;
+    margin-bottom: 80px;
+
   }
 `;
 
