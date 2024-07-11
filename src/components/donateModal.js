@@ -126,6 +126,7 @@ const DonateModal = ({ isPopOpen, onClose, projectID, projectImage, projectTitle
   const [amount, setAmount] = useState('');
   const [donationType, setDonationType] = useState('once');
   const amountInputRef = useRef(null);
+  const proID = projectID;
 
   const handleAmountChange = (e) => {
     setAmount(e.target.value);
@@ -149,7 +150,7 @@ const DonateModal = ({ isPopOpen, onClose, projectID, projectImage, projectTitle
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/projects/${projectID}/donate`,
+        `${process.env.REACT_APP_BASE_URL}/projects/${proID}/donate`,
         {
           amount: Number(amount),
           type: donationType,

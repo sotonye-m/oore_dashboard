@@ -41,17 +41,16 @@ const TextContainer = styled.div`
 `;
 
 const TextContainer2 = styled.div`
+  margin-top: 15px;
   font-size: 12px;
   line-height: 22px;
   padding: 5px;
   padding-bottom: 10px;
   @media (max-width: 378px) {
-    max-height: 90px;
     overflow: auto;
     margin-bottom: 10px;
   }
   @media (min-width: 380px) and (max-width: 768px) {
-    max-height: 120px;
     overflow: auto;
     margin-bottom: 10px;
   }
@@ -64,6 +63,11 @@ const Text = styled.p`
   overflow-y: auto;
   padding-top: 0px;
   margin-top: 5px;
+  max-height: 200px; /* Adjust based on your layout needs */
+  ${'' /* overflow: hidden; */}
+  text-overflow: ellipsis;
+  word-wrap: break-word; /* Break long words to avoid overflow */
+  color: #838383;
 `;
 
 const Header = styled.p`
@@ -91,7 +95,6 @@ const BudgetSpan = styled.span`
 
 const Sec = styled.section`
   overflow: auto;
-  height: 100vh;
   @media (min-width: 768px) {
     padding-left: 300px;
     flex: 1;
@@ -168,6 +171,7 @@ const Project = () => {
 
         // Format data as needed
         const formattedProject = {
+          id: project.id,
           image: project.cover_image,
           header: project.name,
           budget: `Budget: ${project.goal} naira`,
@@ -223,6 +227,7 @@ const Project = () => {
     setDonateProjectId(projectId);
     setDonateProjectImage(projectImage);
     setDonateProjectTitle(projectHeader);
+    console.log(projectId);
     setShowModal(true);
   };
 
@@ -271,23 +276,23 @@ const Project = () => {
                   </div>
                 </ContentContainer>
               )}
-              <TextContainer2>
-                <Header style={{ color: '#656565', fontWeight: '700' }}>About Project</Header>
-                <TextContainer>
-                  <Text style={{ color: '#838383', fontWeight: '500' }}>{projectData && projectData.description}</Text>
-                </TextContainer>
-              </TextContainer2>
               <ButtonCon>
                 <PrimaryButton onClick={() => handleDonate(projectData.id, projectData.image, projectData.header)}>
                   Give Donation
                 </PrimaryButton>
               </ButtonCon>
+              <TextContainer2>
+                <Header style={{ color: '#656565', fontWeight: '700' }}>About Project</Header>
+                <TextContainer>
+                  <Text>{projectData && projectData.description}</Text>
+                </TextContainer>
+              </TextContainer2>
             </>
           )}
         </Sec>
       </main>
       <Footer />
-      {showModal && (
+      {showModal && projectID && (
         <DonateModal isPopOpen={showModal} projectID={donateProjectId} projectImage={donateProjectImage} projectTitle={donateProjectTitle} onClose={() => setShowModal(false)} />
       )}
     </Container>
