@@ -227,7 +227,6 @@ const Project = () => {
     setDonateProjectId(projectId);
     setDonateProjectImage(projectImage);
     setDonateProjectTitle(projectHeader);
-    console.log(projectId);
     setShowModal(true);
   };
 
