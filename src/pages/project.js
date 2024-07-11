@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import Loader from '../components/loader'; // Import the Loader component
 import Footer from '../components/footer';
 import DonateModal from '../components/donateModal';
+import { Helmet } from 'react-helmet';
 
 const Container = styled.div`
   @media (max-width: 768px) {
@@ -136,8 +137,6 @@ const ButtonCon2 = styled.div`
 `;
 
 const Project = () => {
-  //const location = useLocation();
-  //const projectID = location.state.id;
   const { projectID } = useParams();
   const [projectData, setProjectData] = useState(null);
   const [loading, setLoading] = useState(true); // Add loading state
@@ -161,7 +160,6 @@ const Project = () => {
         const project = response.data.data;
 
         // Calculate days left
-        //const startDate = new Date(project.start_date);
         const endDate = new Date(project.end_date);
         const currentDate = new Date();
 
@@ -191,10 +189,33 @@ const Project = () => {
     fetchProject();
   }, [projectID]);
 
+  const handleShareClick = async () => {
+    const url = window.location.href;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Check out this project',
+          url,
+        });
+      } catch (error) {
+        console.error('Error sharing:', error);
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(url);
+        toast.success('URL copied to clipboard');
+      } catch (error) {
+        toast.error('Failed to copy URL');
+        console.error('Failed to copy URL:', error);
+      }
+    }
+  };
+
   const data = [
     {
       pageTitle: '',
-      pageSpecialFunction: <IoShareSocialSharp style={{ color: '#1C1B1F', fontSize: '18px', cursor: 'pointer' }} onClick={() => alert('Share!')} />,
+      pageSpecialFunction: <IoShareSocialSharp style={{ color: '#1C1B1F', fontSize: '18px', cursor: 'pointer' }} onClick={handleShareClick} />,
     }
   ];
 
@@ -207,8 +228,19 @@ const Project = () => {
 
   return (
     <Container>
+      {projectData && (
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Oore - {projectData.header}</title>
+          <link rel="canonical" href={window.location.href} />
+          <meta property="og:title" content={projectData.header} />
+          <meta property="og:description" content={projectData.description} />
+          <meta property="og:image" content={projectData.image} />
+          <meta property="og:url" content={window.location.href} />
+        </Helmet>
+      )}
       <NavBar2 pageInfo={data} />
-      <main style={{ display: 'flex', padding: '20px', paddingTop:'2px' }}>
+      <main style={{ display: 'flex', padding: '20px', paddingTop: '2px' }}>
         <Sidebar />
         <Sec>
           {loading ? (
@@ -242,11 +274,11 @@ const Project = () => {
               <TextContainer2>
                 <Header style={{ color: '#656565', fontWeight: '700' }}>About Project</Header>
                 <TextContainer>
-                  <Text style={{ color: '#838383', fontWeight: '500'}}>{projectData && projectData.description}</Text>
+                  <Text style={{ color: '#838383', fontWeight: '500' }}>{projectData && projectData.description}</Text>
                 </TextContainer>
               </TextContainer2>
               <ButtonCon>
-                <PrimaryButton onClick={()=> handleDonate(projectData.id, projectData.image, projectData.header)}>
+                <PrimaryButton onClick={() => handleDonate(projectData.id, projectData.image, projectData.header)}>
                   Give Donation
                 </PrimaryButton>
               </ButtonCon>
