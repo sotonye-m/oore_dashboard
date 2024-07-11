@@ -59,46 +59,46 @@ const Header = styled.p`
   text-align: left;
 `;
 
-const ButtonsContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-top: 10px;
-  box-sizing: border-box;
-  align-items: baseline;
+// const ButtonsContainer = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   width: 100%;
+//   margin-top: 10px;
+//   box-sizing: border-box;
+//   align-items: baseline;
 
-  @media (min-width: 768px) {
-    display: block;
-    columns: 2;
-  }
-`;
+//   @media (min-width: 768px) {
+//     display: block;
+//     columns: 2;
+//   }
+// `;
 
-const Button = styled.button`
-  color: #00A667;
-  background-color: white;
-  padding: 16px 42px;
-  border: 1px #00A667 solid;
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0em;
-  border-radius: 32px;
+// const Button = styled.button`
+//   color: #00A667;
+//   background-color: white;
+//   padding: 16px 42px;
+//   border: 1px #00A667 solid;
+//   cursor: pointer;
+//   font-size: 12px;
+//   font-weight: 700;
+//   letter-spacing: 0em;
+//   border-radius: 32px;
 
-  @media (min-width: 768px) {
-  }
-`;
+//   @media (min-width: 768px) {
+//   }
+// `;
 
-const Button2 = styled.button`
-  background-color: #00A667;
-  color: white;
-  padding: 16px 42px;
-  border: 1px #00A667 solid;
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0em;
-  border-radius: 32px;
-`;
+// const Button2 = styled.button`
+//   background-color: #00A667;
+//   color: white;
+//   padding: 16px 42px;
+//   border: 1px #00A667 solid;
+//   cursor: pointer;
+//   font-size: 12px;
+//   font-weight: 700;
+//   letter-spacing: 0em;
+//   border-radius: 32px;
+// `;
 
 const Div = styled.div`
   display: flex;

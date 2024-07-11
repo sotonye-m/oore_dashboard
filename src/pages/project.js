@@ -7,7 +7,7 @@ import MediaComponent from '../components/MediaComponent';
 import ProgressBar from '../components/progressbar';
 import PrimaryButton from '../components/PrimaryButton';
 import axios from 'axios';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Loader from '../components/loader'; // Import the Loader component
 import Footer from '../components/footer';
@@ -132,7 +132,7 @@ const ButtonCon2 = styled.div`
 `;
 
 const Project = () => {
-  const location = useLocation();
+  //const location = useLocation();
   //const projectID = location.state.id;
   const { projectID } = useParams();
   const [projectData, setProjectData] = useState(null);
@@ -157,7 +157,7 @@ const Project = () => {
         const project = response.data.data;
 
         // Calculate days left
-        const startDate = new Date(project.start_date);
+        //const startDate = new Date(project.start_date);
         const endDate = new Date(project.end_date);
         const currentDate = new Date();
 

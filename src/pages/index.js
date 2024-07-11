@@ -25,6 +25,9 @@ const Sec = styled.section`
     padding-left: 300px;
     flex: 1;
   }
+  @media (max-width: 768px) {
+    margin-bottom: 70px;
+  }
 `;
 
 const BlueContainer = styled.div`
