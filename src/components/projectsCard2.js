@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { MdOutlineMoreHoriz } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
@@ -134,16 +134,9 @@ const PaginationButton = styled.button`
   }
 `;
 
-const Projects2 = ({ data }) => {
+const Projects2 = ({ data, currentPage, totalPages, onPageChange }) => {
   const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 3;
-
-  const totalPages = Math.ceil(data.length / itemsPerPage);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
 
   const currentPageData = data.slice(
     (currentPage - 1) * itemsPerPage,
@@ -170,7 +163,7 @@ const Projects2 = ({ data }) => {
       ))}
       <PaginationContainer>
         <PaginationButton
-          onClick={() => handlePageChange(currentPage - 1)}
+          onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
         >
           Previous
@@ -178,14 +171,14 @@ const Projects2 = ({ data }) => {
         {[...Array(totalPages).keys()].map((page) => (
           <PaginationButton
             key={page + 1}
-            onClick={() => handlePageChange(page + 1)}
+            onClick={() => onPageChange(page + 1)}
             disabled={currentPage === page + 1}
           >
             {page + 1}
           </PaginationButton>
         ))}
         <PaginationButton
-          onClick={() => handlePageChange(currentPage + 1)}
+          onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
         >
           Next

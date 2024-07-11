@@ -34,13 +34,16 @@ const ProjectsPage = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null); // To filter projects
   const [loading, setLoading] = useState(true); // Add loading state
+  const [currentPage, setCurrentPage] = useState(1); // Current page state
+  const [totalPages, setTotalPages] = useState(1); // Total pages state
 
   useEffect(() => {
-    const fetchProjects = async () => {
+    const fetchProjects = async (page) => {
       const token = localStorage.getItem('bearerToken');
+      setLoading(true);
 
       try {
-        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/projects`, {
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/projects?page=${page}`, {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -60,6 +63,7 @@ const ProjectsPage = () => {
         }));
 
         setProjects(projectsData);
+        setTotalPages(response.data.data.meta.lastPage); // Set total pages
       } catch (error) {
         console.log('Failed to retrieve projects');
       } finally {
@@ -77,9 +81,9 @@ const ProjectsPage = () => {
       }
     };
 
-    fetchProjects();
+    fetchProjects(currentPage);
     fetchCategories();
-  }, []);
+  }, [currentPage]); // Re-fetch projects when currentPage changes
 
   const handleCategoryClick = (categoryId) => {
     setSelectedCategory(categoryId === selectedCategory ? null : categoryId); // Toggle category filter
@@ -95,6 +99,10 @@ const ProjectsPage = () => {
       pageSpecialFunction: '',
     },
   ];
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <Container>
@@ -115,7 +123,7 @@ const ProjectsPage = () => {
                   onClick: () => handleCategoryClick(category.id),
                 }))}
               />
-              <Projects2 data={filteredProjects} />
+              <Projects2 data={filteredProjects} currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
             </>
           )}
         </Sec>

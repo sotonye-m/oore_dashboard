@@ -204,7 +204,7 @@ const Project = () => {
   return (
     <Container>
       <NavBar2 pageInfo={data} />
-      <main style={{ display: 'flex', padding: '20px' }}>
+      <main style={{ display: 'flex', padding: '20px', paddingTop:'2px' }}>
         <Sidebar />
         <Sec>
           {loading ? (
