@@ -195,7 +195,7 @@ const Project = () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'Check out this project',
+          title: projectData.header,
           url,
         });
       } catch (error) {
