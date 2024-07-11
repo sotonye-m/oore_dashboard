@@ -11,6 +11,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Loader from '../components/loader'; // Import the Loader component
 import Footer from '../components/footer';
+import DonateModal from '../components/donateModal';
 
 const Container = styled.div`
   @media (max-width: 768px) {
@@ -38,17 +39,38 @@ const TextContainer = styled.div`
   }
 `;
 
+const TextContainer2 = styled.div`
+  font-size: 12px;
+  line-height: 22px;
+  padding: 5px;
+  @media (max-width: 378px) {
+    max-height: 80px;
+    overflow: auto;
+    margin-bottom: 10px;
+  }
+  @media (min-width: 380px) and (max-width: 768px) {
+    max-height: 120px;
+    overflow: auto;
+    margin-bottom: 10px;
+  }
+`;
+
 const Text = styled.p`
   margin-bottom: 10px;
   font-weight: 500;
   text-align: left;
   overflow-y: auto;
+  padding-top: 0px;
+  margin-top: 5px;
 `;
 
 const Header = styled.p`
   font-weight: 700;
   text-align: left;
   line-height: 22px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  margin-top: 0px;
 `;
 
 const BudgetSpan = styled.span`
@@ -67,7 +89,7 @@ const BudgetSpan = styled.span`
 
 const Sec = styled.section`
   overflow: auto;
-  min-height: 80vh;
+  height: calc(100vh - 10%);
   @media (min-width: 768px) {
     padding-left: 300px;
     flex: 1;
@@ -97,10 +119,7 @@ const Div = styled.div`
 `;
 
 const ButtonCon = styled.div`
-  bottom: 0;
-  margin-bottom: 35px;
-  margin-top: 30px;
-  position: absolute;
+  
   @media (min-width: 768px) {
     display: none;
   }
@@ -118,6 +137,10 @@ const Project = () => {
   const { projectID } = useParams();
   const [projectData, setProjectData] = useState(null);
   const [loading, setLoading] = useState(true); // Add loading state
+  const [showModal, setShowModal] = useState(false);
+  const [donateProjectId, setDonateProjectId] = useState(null);
+  const [donateProjectImage, setDonateProjectImage] = useState(null);
+  const [donateProjectTitle, setDonateProjectTitle] = useState(null);
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -171,6 +194,13 @@ const Project = () => {
     }
   ];
 
+  const handleDonate = (projectId, projectImage, projectHeader) => {
+    setDonateProjectId(projectId);
+    setDonateProjectImage(projectImage);
+    setDonateProjectTitle(projectHeader);
+    setShowModal(true);
+  };
+
   return (
     <Container>
       <NavBar2 pageInfo={data} />
@@ -205,12 +235,14 @@ const Project = () => {
                   </div>
                 </ContentContainer>
               )}
-              <TextContainer>
+              <TextContainer2>
                 <Header style={{ color: '#656565', fontWeight: '700' }}>About Project</Header>
-                <Text style={{ color: '#838383', fontWeight: '500' }}>{projectData && projectData.description}</Text>
-              </TextContainer>
+                <TextContainer>
+                  <Text style={{ color: '#838383', fontWeight: '500'}}>{projectData && projectData.description}</Text>
+                </TextContainer>
+              </TextContainer2>
               <ButtonCon>
-                <PrimaryButton>
+                <PrimaryButton onClick={()=> handleDonate(projectData.id, projectData.image, projectData.header)}>
                   Give Donation
                 </PrimaryButton>
               </ButtonCon>
@@ -219,6 +251,9 @@ const Project = () => {
         </Sec>
       </main>
       <Footer />
+      {showModal && (
+        <DonateModal isPopOpen={showModal} projectID={donateProjectId} projectImage={donateProjectImage} projectTitle={donateProjectTitle} onClose={() => setShowModal(false)} />
+      )}
     </Container>
   );
 };

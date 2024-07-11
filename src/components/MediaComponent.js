@@ -3,15 +3,16 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
 `;
 
 const MediaContainer = styled.div`
   width: 100%;
   max-width: 340px;
-
   overflow: hidden;
   border-radius: 8px;
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
 `;
 
 const Media = styled.div`

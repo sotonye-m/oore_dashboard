@@ -4,18 +4,34 @@ const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState(JSON.parse(localStorage.getItem("auth")) || {});
+    let logoutTimeoutId;
 
-    useEffect(() => {
-        // Set a timeout to clear the local storage and reset the auth state
-        const timeoutId = setTimeout(() => {
+    const resetLogoutTimer = () => {
+        if (logoutTimeoutId) {
+            clearTimeout(logoutTimeoutId);
+        }
+        logoutTimeoutId = setTimeout(() => {
             localStorage.removeItem("auth");
             localStorage.removeItem('bearerToken');
             localStorage.removeItem('email');
             setAuth({});
-        }, 1 * 60 * 60 * 1000); // 1 hour in milliseconds
+        }, 30 * 60 * 1000); // 30 minutes in milliseconds
+    };
 
-        // When the component unmounts, clear the timeout
-        return () => clearTimeout(timeoutId);
+    const handleActivity = () => {
+        resetLogoutTimer();
+    };
+
+    useEffect(() => {
+        resetLogoutTimer();
+        
+        const events = ['mousemove', 'mousedown', 'keypress', 'touchstart', 'click'];
+        events.forEach(event => window.addEventListener(event, handleActivity));
+
+        return () => {
+            events.forEach(event => window.removeEventListener(event, handleActivity));
+            clearTimeout(logoutTimeoutId);
+        };
     }, [auth]);
 
     useEffect(() => {

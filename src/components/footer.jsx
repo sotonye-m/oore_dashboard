@@ -48,7 +48,9 @@ const IconContainer = styled.div`
         align-items: center;
         padding: 10px; */}
       }
-    
+  @media (min-width: 380px) and (max-width: 768px) {
+    margin: 20px;
+  }
 
   &:hover{
     color: #00A667;

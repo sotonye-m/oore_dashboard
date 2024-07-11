@@ -110,6 +110,10 @@ const PaginationContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  @media (min-width: 768px) {
+    padding: 10px;
+    max-width: 100vw;
+  }
 `;
 
 const PaginationButton = styled.button`
@@ -133,7 +137,7 @@ const PaginationButton = styled.button`
 const Projects2 = ({ data }) => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 3;
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
 

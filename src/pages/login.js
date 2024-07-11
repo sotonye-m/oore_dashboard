@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import PrimaryButton from "../components/PrimaryButton";
@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/loader";
 import LoginImage from "../assets/images/login.svg";
+import AuthContext from "../context/AuthProvider";
 
 const LoginContainer = styled.div`
   background-color: #fff;
@@ -83,6 +84,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { setAuth } = useContext(AuthContext);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -135,6 +137,9 @@ const Login = () => {
 
         const responseData = userResponse.data.data;
         localStorage.setItem("user", JSON.stringify(responseData));
+
+        // Update auth state in context
+        setAuth({ token, email, ...responseData });
 
         // Clear email and password state
         setEmail("");
@@ -220,7 +225,7 @@ const Login = () => {
         </LoginForm>
       </Main>
       <MainDiv>
-        <img style={{maxHeight:'100%'}} src={LoginImage} alt="login" />
+        <img style={{ maxHeight: "100%" }} src={LoginImage} alt="login" />
       </MainDiv>
     </LoginContainer>
   );
