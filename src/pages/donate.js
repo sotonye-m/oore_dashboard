@@ -6,6 +6,7 @@ import SuccessImage from '../assets/images/success1.gif';
 import ErrorImage from '../assets/images/error.gif';
 import NavBar from '../components/navbar';
 import Sidebar from '../components/Sidebar';
+import Footer from '../components/footer';
 
 const Container = styled.div`
   @media (max-width: 768px) {
@@ -140,6 +141,7 @@ const DonateResult = () => {
                 </SecondContainer>
             </Sec>
         </main>
+        <Footer />
     </Container>
   );
 };

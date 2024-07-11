@@ -7,6 +7,7 @@ import NavBar from '../components/navbar';
 import Sidebar from '../components/Sidebar';
 import { Sec } from './donate';
 import CountryDropdown from 'country-dropdown-with-flags-for-react';
+import Footer from '../components/footer';
 
 const SecondContainer = styled.div`
   display: flex;
@@ -186,6 +187,7 @@ const AccountPage = () => {
           </SecondContainer>
         </Sec>
       </main>
+      <Footer />
     </Container>
   );
 };

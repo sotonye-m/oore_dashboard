@@ -43,8 +43,9 @@ const TextContainer2 = styled.div`
   font-size: 12px;
   line-height: 22px;
   padding: 5px;
+  padding-bottom: 10px;
   @media (max-width: 378px) {
-    max-height: 80px;
+    max-height: 90px;
     overflow: auto;
     margin-bottom: 10px;
   }
@@ -122,7 +123,7 @@ const Div = styled.div`
 `;
 
 const ButtonCon = styled.div`
-  
+  background: #fff;
   @media (min-width: 768px) {
     display: none;
   }
