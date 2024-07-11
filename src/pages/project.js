@@ -89,7 +89,7 @@ const BudgetSpan = styled.span`
 
 const Sec = styled.section`
   overflow: auto;
-  height: calc(100vh - 10%);
+  height: 100vh;
   @media (min-width: 768px) {
     padding-left: 300px;
     flex: 1;
