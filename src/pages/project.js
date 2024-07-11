@@ -267,7 +267,7 @@ const Project = () => {
                         <div>{projectData.percentComplete}%</div>
                       </Flex>
                       <ButtonCon2>
-                        <PrimaryButton>
+                        <PrimaryButton  onClick={() => handleDonate(projectData.id, projectData.image, projectData.header)}>
                           Give Donation
                         </PrimaryButton>
                       </ButtonCon2>
