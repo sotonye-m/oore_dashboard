@@ -4,14 +4,14 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import PrimaryButton from './PrimaryButton';
 
-const Icon = styled.img`
-  padding: 20px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 20px;
-  height: auto;
-`;
+// const Icon = styled.img`
+//   padding: 20px;
+//   display: block;
+//   margin-left: auto;
+//   margin-right: auto;
+//   width: 20px;
+//   height: auto;
+// `;
 
 const Background = styled.div`
   position: fixed;
@@ -200,7 +200,6 @@ const DonateModal = ({ isPopOpen, onClose, projectID, projectImage, projectTitle
   };
 
 
-  const handleClose = onClose || (() => {});
 
   return (
     isPopOpen && (
