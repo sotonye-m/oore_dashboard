@@ -27,7 +27,6 @@ const Sec = styled.section`
   }
   @media (max-width: 768px) {
     margin-bottom: 80px;
-
   }
 `;
 

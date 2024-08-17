@@ -230,7 +230,7 @@ const DonateModal = ({ isPopOpen, onClose, projectID, projectImage, projectTitle
                   onChange={(e) => setDonationType(e.target.value)}
                 >
                   <option value="once">One-time</option>
-                  <option value="recurring">Recurring</option>
+                  {/* <option value="recurring">Recurring</option> */}
                 </SelectInput>
               </div>
               <PrimaryButton type="submit">Donate</PrimaryButton>
