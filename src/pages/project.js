@@ -174,8 +174,8 @@ const Project = () => {
           id: project.id,
           image: project.cover_image,
           header: project.name,
-          budget: `Budget: ${project.goal} naira`,
-          amountRaised: `# ${project.amount_paid}`,
+          budget: `Budget: ${formatCurrency(project.goal)} naira`,
+          amountRaised: `# ${formatCurrency(project.amount_paid)}`,
           description: project.description,
           daysLeft: `${daysLeft} days Left`,
           percentComplete: parseFloat(project.percent_complete.replace('%', '')), // Remove % symbol and convert to float
@@ -229,7 +229,7 @@ const Project = () => {
     setDonateProjectTitle(projectHeader);
     setShowModal(true);
   };
-
+  
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-NG', {
       style: 'currency',
@@ -266,7 +266,7 @@ const Project = () => {
                       <BudgetSpan>{projectData.budget}</BudgetSpan>
                     </TextContainer>
                     <div style={{ display: 'inline-block' }}>
-                      <Div>{formatCurrency(projectData.amountRaised)} raised</Div>
+                      <Div>{projectData.amountRaised} raised</Div>
                       <ProgressBar percentage={projectData.percentComplete} />
                       <Flex>
                         <div>{projectData.daysLeft}</div>
