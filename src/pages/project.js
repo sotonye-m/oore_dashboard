@@ -230,6 +230,12 @@ const Project = () => {
     setShowModal(true);
   };
 
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('en-NG', {
+      style: 'currency',
+      currency: 'NGN',
+    }).format(amount);
+  };
   return (
     <Container>
       {projectData && (
@@ -260,7 +266,7 @@ const Project = () => {
                       <BudgetSpan>{projectData.budget}</BudgetSpan>
                     </TextContainer>
                     <div style={{ display: 'inline-block' }}>
-                      <Div>{projectData.amountRaised} raised</Div>
+                      <Div>{formatCurrency(projectData.amountRaised)} raised</Div>
                       <ProgressBar percentage={projectData.percentComplete} />
                       <Flex>
                         <div>{projectData.daysLeft}</div>
