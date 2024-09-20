@@ -103,70 +103,82 @@ const Login = () => {
     setLoading(true); // Start loading
 
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/auth/signin`,
-        JSON.stringify({ email, password }),
-        {
-          headers: { "Content-Type": "application/json" },
+        const response = await axios.post(
+            `${process.env.REACT_APP_BASE_URL}/auth/signin`,
+            JSON.stringify({ email, password }),
+            {
+                headers: { "Content-Type": "application/json" },
+            }
+        );
+
+        if (response?.status === 401) {
+            toast.error("Invalid email or password");
+            setLoading(false); // Stop loading
+            return;
         }
-      );
 
-      if (response?.status === 401) {
-        toast.error("Invalid email or password");
-        setLoading(false); // Stop loading
-        return;
-      }
+        const token = response?.data?.data?.token;
 
-      const token = response?.data?.data?.token;
+        if (token) {
+            // Set token in local storage
+            localStorage.setItem("bearerToken", token);
+            localStorage.setItem("email", email);
 
-      if (token) {
-        // Set token in local storage
-        localStorage.setItem("bearerToken", token);
-        localStorage.setItem("email", email);
+            // Fetch user data using the token
+            const userResponse = await axios.get(
+                `${process.env.REACT_APP_BASE_URL}/auth/user`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
 
-        // Fetch user data using the token
-        const userResponse = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/auth/user`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+            const responseData = userResponse.data.data;
+            localStorage.setItem("user", JSON.stringify(responseData));
 
-        const responseData = userResponse.data.data;
-        localStorage.setItem("user", JSON.stringify(responseData));
+            // Update auth state in context
+            setAuth({ token, email, ...responseData });
 
-        // Update auth state in context
-        setAuth({ token, email, ...responseData });
+            // Clear email and password state
+            setEmail("");
+            setPassword("");
 
-        // Clear email and password state
-        setEmail("");
-        setPassword("");
-
-        // Display success message and navigate to dashboard
-        toast.success("Login successful!");
-        navigate("/dashboard");
-      } else {
-        toast.error("User data not found");
-      }
+            // Display success message and navigate to dashboard
+            toast.success("Login successful!");
+            navigate("/dashboard");
+        } else {
+            toast.error("User data not found");
+        }
     } catch (err) {
-      if (!err?.response) {
-        toast.error("No server response");
-      } else if (err.response?.status === 400) {
-        toast.error("Missing Email or Password");
-      } else if (err.response?.status === 401) {
-        toast.error(
-          err.response?.data?.errors?.message || "Invalid email or password"
-        );
-      } else {
-        toast.error("Login Failed");
-      }
+        setLoading(false); // Stop loading
+        if (!err?.response) {
+            toast.error("No server response");
+        } else if (err.response?.status === 400) {
+            toast.error("Missing Email or Password");
+        } else if (err.response?.status === 401) {
+            const { message, errors } = err.response.data;
+
+            // Display the main message
+            toast.error(message);
+
+            // Check for specific errors and display them
+            if (errors) {
+                Object.entries(errors).forEach(([key, value]) => {
+                    value.forEach((errorMsg) => {
+                        toast.error(`${key}: ${errorMsg}`);
+                    });
+                });
+            }
+        } else {
+            toast.error("Login Failed");
+        }
     } finally {
-      setLoading(false); // Stop loading
+        setLoading(false); // Stop loading
     }
-  };
+};
+
 
   return (
     <LoginContainer>

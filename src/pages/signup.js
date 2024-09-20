@@ -132,13 +132,13 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true); // Start loading
-
+    
         if (password !== confirmPassword) {
             toast.error('Passwords do not match');
             setLoading(false); // Stop loading on error
             return;
         }
-
+    
         const userData = {
             first_name: firstname,
             last_name: lastname,
@@ -147,13 +147,13 @@ const Signup = () => {
             password_confirmation: confirmPassword,
             country: country,
         };
-
+    
         try {
             const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/register`, userData);
             if (response.status === 200 || response.status === 201) {
                 toast.success('Account created successfully!');
-                const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/otp/email`, { email: email });
-                if (response.status === 200 || response.status === 201) {
+                const otpResponse = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/otp/email`, { email: email });
+                if (otpResponse.status === 200 || otpResponse.status === 201) {
                     toast.success('An OTP has been sent to your email address. Please check your inbox.');
                     navigate('/otp', { state: { email: email } });
                 } else {
@@ -161,11 +161,28 @@ const Signup = () => {
                 }
             }
         } catch (error) {
-            toast.error('An error occurred. Please try again.');
+            if (error.response && error.response.data) {
+                const { message, errors } = error.response.data;
+    
+                // Display the main message
+                toast.error(message);
+    
+                // Check for specific errors and display them
+                if (errors) {
+                    Object.entries(errors).forEach(([key, value]) => {
+                        value.forEach((errorMsg) => {
+                            toast.error(`${key}: ${errorMsg}`);
+                        });
+                    });
+                }
+            } else {
+                toast.error('An error occurred. Please try again.');
+            }
         } finally {
             setLoading(false); // Stop loading
         }
     };
+    
 
     return (
         <LoginContainer>
