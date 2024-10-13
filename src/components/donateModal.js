@@ -125,6 +125,7 @@ const SelectInput = styled.select`
 const DonateModal = ({ isPopOpen, onClose, projectID, projectImage, projectTitle }) => {
   const [amount, setAmount] = useState('');
   const [donationType, setDonationType] = useState('once');
+  const [isLoading, setIsLoading] = useState(false);
   const amountInputRef = useRef(null);
   const proID = projectID;
 
@@ -142,9 +143,11 @@ const DonateModal = ({ isPopOpen, onClose, projectID, projectImage, projectTitle
   };
 
   const handleSubmitDonation = async (e) => {
+    setIsLoading(true)
     e.preventDefault();
     if (!amount || isNaN(Number(amount)) || Number(amount) < 500) {
       toast.info('Please enter a donation amount of at least 500 Naira.');
+      setIsLoading(false)
       return;
     }
 
@@ -165,6 +168,7 @@ const DonateModal = ({ isPopOpen, onClose, projectID, projectImage, projectTitle
 
       if (response) {
         // Store the latest donation in localStorage
+        setIsLoading(false)
         const latestDonation = {
           projectID,
           projectImage,
@@ -192,6 +196,7 @@ const DonateModal = ({ isPopOpen, onClose, projectID, projectImage, projectTitle
           toast.info('Please allow pop-ups for this site to complete the donation.');
           window.open(response.data.data.payment_url, '_self'); 
         }
+        setIsLoading(false)
       }
     } catch (error) {
       console.error('Failed to donate:', error);
@@ -233,7 +238,7 @@ const DonateModal = ({ isPopOpen, onClose, projectID, projectImage, projectTitle
                   {/* <option value="recurring">Recurring</option> */}
                 </SelectInput>
               </div>
-              <PrimaryButton type="submit">Donate</PrimaryButton>
+              <PrimaryButton type="submit">{isLoading ? 'processing..' : 'Donate'}</PrimaryButton>
             </form>
           </DivPop>
         </PopupCard>
